@@ -1,0 +1,59 @@
+<div class="container-varaint">
+    <div class="container-varaint-inner" >
+        <!-- <div class="search-conatiner" >
+            <div class="input-search" >
+                <input type="text" placeholder="Enter Anlaysis Id"  [(ngModel)]="analysisId" />
+            </div>
+            <button [disabled]="uniqueAcmgClassifications.length === 0" (click)="serahcVarinats()" >SEARCH</button>
+        </div> -->
+        <div class="uniqaAcmgSelector-container" >
+            <mat-form-field class="uniqaAcmgSelector" >
+                <mat-label>Acmg Classification</mat-label>
+                <mat-select [(value)]="selectedAcmgClassification" (selectionChange)="getSelectedAcmgClassification()">
+                  <mat-option *ngFor="let classification of uniqueAcmgClassifications" [value]="classification.AcmgClassification">
+                    {{ classification.AcmgClassification }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button (click)="openFillterDialog()" >Column Filter</button>
+        </div>  
+    </div>
+    <div class="table-container">
+        <div class="loader" *ngIf="loader" >
+            <mat-spinner></mat-spinner>
+        </div>
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 pat-table">
+            <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </th>
+              
+              <td *matCellDef="let element"> 
+                <ng-container *ngIf="column === 'AcmgClassification'">
+                  <p *ngIf="element[column] !== 'Uncertain significance' && element[column] !== 'Likely pathogenic' && element[column] !== 'Pathogenic'">{{ element[column] }}</p> 
+                  <p *ngIf="element[column] === 'Pathogenic'" style="color: red;" >{{ element[column] }}</p> 
+                  <p *ngIf="element[column] === 'Likely pathogenic' " style="color: orange;" >{{ element[column] }}</p> 
+                  <p *ngIf="element[column] === 'Uncertain significance'" style="color: yellow;" >{{ element[column] }}</p> 
+                </ng-container>
+                <ng-container *ngIf="column !== 'AcmgClassification'">
+                  {{ element[column] }} 
+                </ng-container>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+          <div style="height: 50px;"  *ngIf="loader"> 
+
+          </div>
+    </div>
+    <div class="no-data-found-conatiner" *ngIf="noDataFound && !loader" >
+        <div class="no-data-found">No data found</div>
+    </div>
+    <div *ngIf="!noDataFound">
+        <mat-paginator #paginator [length]="TotalRecords" [pageSize]="recordsToShow"
+              [pageSizeOptions]="recordOptions" showFirstLastButtons (page)="onPaginateChange($event)">
+        </mat-paginator>
+    </div>
+    
+  </div>

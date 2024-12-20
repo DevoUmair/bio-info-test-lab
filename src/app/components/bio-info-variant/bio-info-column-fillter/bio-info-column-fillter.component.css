@@ -1,0 +1,19 @@
+.select-data-inside-wrapper{
+    grid-column-gap:1rem;
+    grid-row-gap:1.7rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit , minmax(150px , 0.4fr));
+    margin: 20px 0px 0px;
+}
+
+button{
+    outline: none;
+    border: none;
+    background: #1e6e10;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 14px 17px;
+    border-radius: 5px;
+    margin: 14px 0px;
+    cursor: pointer;
+ }

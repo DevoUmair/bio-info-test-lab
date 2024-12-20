@@ -1,0 +1,15 @@
+<mat-dialog-content class="mat-typography">
+         <div class="bio-info-container" >
+            <div class="select-data-wrapper">
+                <input type="checkbox" id="checkall" value="checkall" [checked]="isCheckAll" (change)="selectFormDataCkecked($event, 'checkall')" />
+                <label for="checkall">Check All</label>
+            </div>
+            <div class="select-data-inside-wrapper">
+                <div *ngFor="let item of columdDataList">
+                    <input type="checkbox" id="{{item}}" [checked]="isChecked(item)" (change)="selectFormDataCkecked($event, item)" />
+                    <label for="{{item}}">{{item}}</label>
+                </div>
+            </div>
+            <button (click)="onClose()">Submit</button>
+         </div>
+</mat-dialog-content>

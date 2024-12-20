@@ -1,0 +1,121 @@
+.header {
+    background-color: transparent;
+    color: white;
+    padding: 20px 0px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header img{
+    width: 300px;
+    object-fit: contain;
+  }
+
+  .header-sub{
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 5px;
+  }
+
+  .gradient-background{
+    width: 100%;
+    height: 20px;
+    background: rgb(33,170,148);
+    background: linear-gradient(90deg, rgba(33,170,148,1) 0%, rgba(20,141,189,1) 100%);
+  }
+
+  .box-conatiner .card{
+    border-radius: 0px !important;
+  }
+
+  .header-sub p{
+    margin: 0px !important;
+  }
+
+  .panel-header {
+    margin: 20px 0;
+    font-size: 24px;
+    text-align: left;
+  }
+
+  .panel-header h4{
+    font-size: 25px;
+    font-weight: 500;
+    background: -webkit-linear-gradient(rgba(33,170,148,1), rgba(20,141,189,1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .card-header {
+    background-color: #006eab;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .box-conatiner .card-header{
+    border-radius: 0px !important;
+  }
+
+  .alert-positive {
+    background-color: #d9534f;
+    color: white;
+    font-weight: 400;
+    padding: 15px 22px; 
+    text-align: left;
+    font-size: 16px;
+    border-radius: 25px;
+  }
+  .result-key {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .result-key .result-key-box {
+    width: 50px;
+    height: 50px;
+  }
+
+  .result-key-box-cont{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+  } 
+
+  .result-key-box-cont p{
+    margin: 0px !important;
+  }
+
+  .pathogenic { background-color: #d9534f; color: white; }
+  .vus { background-color: #f0ad4e; color: white; }
+  .negative { background-color: #5cb85c; color: white; }
+  .table-custom th {
+    background-color: #006eab;
+    color: white;
+  }
+  .table-custom td {
+    background-color: #f7f7f7;
+  }
+  .footer {
+    text-align: right;
+    font-size: 12px;
+    color: #999;
+    margin-top: 20px;
+  }
+
+  .box-conatiner .card-body {
+    padding: 0px !important;
+  }
+
+  .box-conatiner .card-body p{
+    margin: 0px !important;    
+    padding: 8px 18px !important;
+  }
+
+  .box-conatiner .card-body p:not(:last-child){
+    border-bottom: 1px solid #bbbbbb;
+  }
