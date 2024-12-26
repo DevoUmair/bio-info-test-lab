@@ -4,8 +4,23 @@
     padding: 20px 0px;
     text-align: center;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .varinat-tite{
+    font-size:16px;
+    font-weight: lighter;
+  }
+
+  
+  #pdf-1{
+    background: transparent;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    font-family: sans-serif;
   }
 
   .header img{
@@ -15,10 +30,13 @@
 
   .header-sub{
     color: #000;
-    display: flex;
-    flex-direction: column;
-    text-align: right;
     gap: 5px;
+    flex-basis: 80%;
+    /* background: red; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    text-align: right;
   }
 
   .gradient-background{
@@ -28,8 +46,9 @@
     background: linear-gradient(90deg, rgba(33,170,148,1) 0%, rgba(20,141,189,1) 100%);
   }
 
-  .box-conatiner .card{
+  .box-conatiner .card-custom{
     border-radius: 0px !important;
+    border:  1px solid #bbbbbb;
   }
 
   .header-sub p{
@@ -53,7 +72,13 @@
   .card-header {
     background-color: #006eab;
     color: #fff;
-    font-weight: bold;
+    font-weight: 700;
+    padding: 8px 12px;
+    font-size: 16px;
+  }
+
+  .card-body{
+    font-size: 13px;
   }
 
   .box-conatiner .card-header{
@@ -68,22 +93,31 @@
     text-align: left;
     font-size: 16px;
     border-radius: 25px;
+    margin-top: 30px;
   }
   .result-key {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    justify-items: space-between !important;
+    justify-content: space-between !important;
+    align-items: center;
+    margin: 20px 0px;
+    width: 100%;
   }
   .result-key .result-key-box {
     width: 50px;
     height: 50px;
+
   }
 
   .result-key-box-cont{
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    text-align: center;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    flex-direction: column;
+    font-size: 14px;
+
   } 
 
   .result-key-box-cont p{
@@ -96,15 +130,28 @@
   .table-custom th {
     background-color: #006eab;
     color: white;
+    font-weight: lighter;
   }
   .table-custom td {
-    background-color: #f7f7f7;
+    /* background-color: #f7f7f7; */
+    background-color: transparent !important;
   }
   .footer {
     text-align: right;
     font-size: 12px;
     color: #999;
     margin-top: 20px;
+  }
+
+  .box-conatiner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 10px; 
+  }
+  
+
+  .box-conatiner .box-1{
+    flex-basis: 33%;
   }
 
   .box-conatiner .card-body {
@@ -119,3 +166,26 @@
   .box-conatiner .card-body p:not(:last-child){
     border-bottom: 1px solid #bbbbbb;
   }
+
+  .card-header-custom{
+    padding: 10px;
+    color: #fff;
+  }
+
+  .table-custom tbody{
+    font-size: 13px !important;
+    line-height: 22px !important;
+  }
+
+  .table-custom thead{
+    font-size: 16px !important;
+  }
+  @media screen and (max-width: 1100px) {
+    .result-key-box-cont {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+        flex-direction: column;
+    }
+}

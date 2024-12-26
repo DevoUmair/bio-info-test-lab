@@ -30,4 +30,14 @@ export class ApiService {
   getPatientVariantsPdf1(analysisId : string){
     return this.http.get(`${this.varinatUrl}patient-variants-pdf1-data/${analysisId}`)
   }
+ 
+  generatePdf(htmlContent: string) {
+    return this.http.post(
+      `${this.varinatUrl}generate_result_pdf`,
+      { htmlContent }, // Correct JSON structure
+    );
+  }
+  
+  
+  
 }

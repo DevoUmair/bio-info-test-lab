@@ -1,18 +1,20 @@
 <div class="py-4" >
-    <div class="container" id="pdf-1">
+    <div  id="pdf-1">
         <div class="header">
-            <img src="../../../../assets/LOGo.png" />
+            <img src="http://localhost:4200/assets/LOGo.png" />
             <div class="header-sub" >
                <div>
-                    <p>17115 Red Oak DR, Ste 123,</p>
-                    <p>Houston TX 77090</p>
-               </div>
-               <div>
-                    <p> P: 561.635.0392 | F: 832.4130059</p>
-               </div>
-               <div>
-                    <p>CLIA: 45D2257672</p>
-                    <p>Lab Director: Dr. Kerollos Shaker</p>
+                  <div>
+                        <p>17115 Red Oak DR, Ste 123,</p>
+                        <p>Houston TX 77090</p>
+                  </div>
+                  <div>
+                        <p> P: 561.635.0392 | F: 832.4130059</p>
+                  </div>
+                  <div>
+                        <p>CLIA: 45D2257672</p>
+                        <p>Lab Director: Dr. Kerollos Shaker</p>
+                  </div>
                </div>
             </div>
         </div>
@@ -25,9 +27,9 @@
             <h4>Cancer Risk Panel</h4>
         </div>
   
-      <div class="row box-conatiner">
-        <div class="col-md-4">
-          <div class="card">
+      <div class="box-conatiner">
+        <div class="box-1">
+          <div class="card-custom">
             <div class="card-header">Patient</div>
             <div class="card-body">
               <p><strong>First Name:</strong> John</p>
@@ -39,8 +41,8 @@
           </div>
         </div>
   
-        <div class="col-md-4">
-          <div class="card">
+        <div class="box-1">
+          <div class="card-custom">
             <div class="card-header">Specimen</div>
             <div class="card-body">
               <p><strong>Specimen Type:</strong> Buccal Swab</p>
@@ -52,8 +54,8 @@
           </div>
         </div>
   
-        <div class="col-md-4">
-          <div class="card">
+        <div class="box-1">
+          <div class="card-custom">
             <div class="card-header">Ordering Physician</div>
             <div class="card-body">
               <p><strong>Physician:</strong> </p>
@@ -66,7 +68,7 @@
         </div>
       </div>
   
-      <div class="alert-positive mt-4">
+      <div class="alert-positive">
         Test Result: Pathogenic / Likely Pathogenic variant detected on CHEK2 gene.
       </div>
   
@@ -94,6 +96,201 @@
         </div>
       </div>
 
+  
+      <div *ngFor="let data of variantData">
+        <h3 class="mt-4 varinat-tite" >{{data.Variant}}</h3>
+        <table class="table table-striped table-custom mt-4 mb-0"  style="border: 1px solid black; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;" >Gene & Transcript</th>
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;" >Variant</th>
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;" >Inheritance</th>
+              <!-- <th style="border: 1px solid black;" >Disorder or Phenotype</th> -->
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;" >Criteria</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: 1px solid black; font-weight: 400; font-size: 14px;" >{{data.GeneSymbol}}</td>
+              <td style="border: 1px solid black; font-weight: 400; font-size: 14px;" >{{data.Variant}}</td>
+              <td style="border: 1px solid black; font-weight: 400; font-size: 14px;" >{{data.Zygosity}}</td>
+              <!-- <td style="border: 1px solid black;" >Li-Fraumeni syndrome 2</td> -->
+              <td style="border: 1px solid black; font-weight: 400; font-size: 14px;" >{{data.ACMGRules}}</td>
+            </tr>
+          </tbody>
+        </table>
+    
+        <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;">Location</th>
+              <!-- <th style="border: 1px solid black;">Allele State</th> -->
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;">Allelic Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: 1px solid black;">{{data.ExonLocation}}</td>
+              <!-- <td style="border: 1px solid black;">Heterozygous</td> -->
+              <td style="border: 1px solid black;">{{data.AllelicBalance}}</td>
+            </tr>
+          </tbody>
+        </table>
+    
+        <table class="table table-striped table-custom">
+          <thead>
+            <tr>
+              <!-- <th style="border: 1px solid black;">Genomic Position</th> -->
+              <th style="border: 1px solid black; font-weight: 400; font-size: 14px;"> Coverage</th>
+              <th *ngIf="data.ACMGClassification !== 'Uncertain significance' && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black; font-weight: 400; font-size: 14px;">AcmgClassification</th>
+              <th *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; background: orange; font-weight: 400; font-size: 14px;">AcmgClassification</th>
+              <th *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black; background: red; font-weight: 400; font-size: 14px;">AcmgClassification</th>
+              <th *ngIf="data.ACMGClassification === 'Uncertain significance' " style="border: 1px solid black !important; background: yellow; font-weight: 400; font-size: 14px;">AcmgClassification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <!-- <td style="border: 1px solid black;">Chr22:NC_000022.10:g.29095917C>G</td> -->
+              <td style="border: 1px solid black; font-weight: 400; font-size: 14px;">{{data.Coverage}}</td>
+              <td *ngIf="data.ACMGClassification !== 'Uncertain significance' && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black; font-weight: 400; font-size: 14px; font-weight: 400; font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
+              <td *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; background: orange; font-weight: 400; font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
+              <td *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black; background: red; font-weight: 400; font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
+              <td *ngIf="data.ACMGClassification === 'Uncertain significance' " style="border: 1px solid black; background: yellow; font-weight: 400; font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top: 30px;" >
+          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent; color: rgb(255, 107, 107);">Gene Info</td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">Gene Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #fff;" >
+                <td style="border: 1px solid black; padding: 13px 20px;">
+                  The Variant is found at <span>{{data.HGVSNotation}}</span> location with a <span>{{data.VariantType}}</span> variant <span>{{data.HGVSCoding}}</span> change on the patient's <span>{{data?.GeneSymbol}}</span>.</td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">Variant Interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">
+                    <p>The missense variant NM_007194.4(CHEK2):c.917G>C (p.Gly306Ala) causes the same amino acid change as a
+                        which is not likely to impact secondary protein structure as these residues share similar properties. 2 variants within 6
+                        amino acid positions of the variant p.Gly306Ala have been shown to be pathogenic, while none have been shown to
+                        be benign. For these reasons, this variant has been classified as Likely Pathogenic. </p>
+                    <p class="mt-4" >Overview: OBSOLETE. Any Li-Fraumeni syndrome in which the cause of the disease is a mutation in the CHEK2 gene.</p>    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">Inheritance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">
+                  {{ data.Inheritance ? data.Inheritance : '-' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">ACMG-Classification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent; color: rgb(255, 107, 107);">
+                  {{data.ACMGClassification}} {{data.ACMGRules}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">Gene & Disorder or Phenotype</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">Li-Fraumeni syndrome 2</td>
+              </tr>
+            </tbody>
+          </table>
+          <table *ngIf="data.gene_description" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">Gene Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">{{data.gene_description}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table *ngIf="data.pheno_type" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 14px;">Phenotype</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">{{data.pheno_type}}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+            <thead>
+              <tr>
+                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">What’s next</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">Correlate the findings with clinical symptoms, biochemical profile and family history whilst closely monitoring the
+                    subject with periodical visits.</td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+      </div>
+  
+      
       <div style="margin-top: 30px;" >
         <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
           <thead>
@@ -176,206 +373,25 @@
           </tbody>
         </table>
       </div>
-  
-      <div *ngFor="let data of variantData">
-        <h3 class="mt-4 bold" >{{data.Variant}}</h3>
-        <table class="table table-striped table-custom mt-4 mb-0"  style="border: 1px solid black; border-collapse: collapse;">
-          <thead>
-            <tr>
-              <th style="border: 1px solid black;" >Gene & Transcript</th>
-              <th>Variant</th>
-              <th style="border: 1px solid black;" >Inheritance</th>
-              <!-- <th style="border: 1px solid black;" >Disorder or Phenotype</th> -->
-              <th style="border: 1px solid black;" >Criteria</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="border: 1px solid black;" >{{data.GeneSymbol}}</td>
-              <td style="border: 1px solid black;" >{{data.Variant}}</td>
-              <td style="border: 1px solid black;" >{{data.Zygosity}}</td>
-              <!-- <td style="border: 1px solid black;" >Li-Fraumeni syndrome 2</td> -->
-              <td style="border: 1px solid black;" >{{data.ACMGRules}}</td>
-            </tr>
-          </tbody>
-        </table>
-    
-        <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse;">
-          <thead>
-            <tr>
-              <th style="border: 1px solid black;">Location</th>
-              <!-- <th style="border: 1px solid black;">Allele State</th> -->
-              <th style="border: 1px solid black;">Allelic Balance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="border: 1px solid black;">{{data.ExonLocation}}</td>
-              <!-- <td style="border: 1px solid black;">Heterozygous</td> -->
-              <td style="border: 1px solid black;">{{data.AllelicBalance}}</td>
-            </tr>
-          </tbody>
-        </table>
-    
-        <table class="table table-striped table-custom">
-          <thead>
-            <tr>
-              <!-- <th style="border: 1px solid black;">Genomic Position</th> -->
-              <th style="border: 1px solid black;"> Coverage</th>
-              <th *ngIf="data.ACMGClassification !== 'Uncertain significance' && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black;">AcmgClassification</th>
-              <th *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; background: orange;">AcmgClassification</th>
-              <th *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black; background: red;">AcmgClassification</th>
-              <th *ngIf="data.ACMGClassification === 'Uncertain significance' " style="border: 1px solid black !important; background: yellow;">AcmgClassification</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <!-- <td style="border: 1px solid black;">Chr22:NC_000022.10:g.29095917C>G</td> -->
-              <td style="border: 1px solid black;">{{data.Coverage}}</td>
-              <td *ngIf="data.ACMGClassification !== 'Uncertain significance' && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; background: orange;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black; background: red;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td *ngIf="data.ACMGClassification === 'Uncertain significance' " style="border: 1px solid black; background: yellow;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="margin-top: 30px;" >
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent; color: rgb(255, 107, 107);">Gene Info</td>
-              </tr>
-            </tbody>
-          </table>
-    
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Gene Info</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="background: #fff;" >
-                <td style="border: 1px solid black; padding: 13px 20px;">
-                  The Variant is found at <span>{{data.HGVSNotation}}</span> location with a <span>{{data.VariantType}}</span> variant <span>{{data.HGVSCoding}}</span> change on the patient's <span>{{data?.GeneSymbol}}</span>.</td>
-              </tr>
-            </tbody>
-          </table>
-    
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Variant Interpretation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">
-                    <p>The missense variant NM_007194.4(CHEK2):c.917G>C (p.Gly306Ala) causes the same amino acid change as a
-                        which is not likely to impact secondary protein structure as these residues share similar properties. 2 variants within 6
-                        amino acid positions of the variant p.Gly306Ala have been shown to be pathogenic, while none have been shown to
-                        be benign. For these reasons, this variant has been classified as Likely Pathogenic. </p>
-                    <p class="mt-4" >Overview: OBSOLETE. Any Li-Fraumeni syndrome in which the cause of the disease is a mutation in the CHEK2 gene.</p>    
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Inheritance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">
-                  {{ data.Inheritance ? data.Inheritance : '-' }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">ACMG-Classification</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent; color: rgb(255, 107, 107);">
-                  {{data.ACMGClassification}} {{data.ACMGRules}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Gene & Disorder or Phenotype</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">Li-Fraumeni syndrome 2</td>
-              </tr>
-            </tbody>
-          </table>
-          <table *ngIf="data.gene_description" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Gene Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">{{data.gene_description}}</td>
-              </tr>
-            </tbody>
-          </table>
 
-          <table *ngIf="data.pheno_type" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">Phenotype</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">{{data.pheno_type}}</td>
-              </tr>
-            </tbody>
-          </table>
-          
-          <!-- <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
-            <thead>
-              <tr>
-                <th style="border: 1px solid black; padding: 13px 20px; border-top: none; font-weight: 400; font-size: 15px;">What’s next</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 13px 20px; background: transparent;">Correlate the findings with clinical symptoms, biochemical profile and family history whilst closely monitoring the
-                    subject with periodical visits.</td>
-              </tr>
-            </tbody>
-          </table> -->
-        </div>
-      </div>
-  
       <div class="footer">
         <p>CLIA: 45D2257672 &nbsp; | &nbsp; Lab Director: Dr. Kerollos Shaker</p>
       </div>
     </div>
     <div class="container">
-      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf()" >EXPORT</button>
+      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf()" >EXPORT1</button>
+    </div>
+    <div class="container">
+      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf2()" >EXPORT2</button>
+    </div>
+    <div class="container">
+      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf3()" >EXPORT3</button>
+    </div>
+    <div class="container">
+      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf4()" >EXPORT4</button>
+    </div>
+    <div class="container">
+      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf5()" >EXPORT5</button>
     </div>
   </div>
   

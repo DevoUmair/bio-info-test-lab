@@ -13,6 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "html2pdf.js",
+              "pdfmake"
+            ],
             "outputPath": "dist/bio-info-test-pluto",
             "index": "src/index.html",
             "main": "src/main.ts",
