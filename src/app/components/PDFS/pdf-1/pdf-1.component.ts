@@ -1,18 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import {jsPDF} from 'jspdf'
-import html2canvas from 'html2canvas'
 import { saveAs } from 'file-saver';
-import * as html2pdf from 'html2pdf.js';
 
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import * as htmlToPdfMake from 'html-to-pdfmake';
-
-import { vfs } from 'pdfmake/build/vfs_fonts';
-
-pdfMake.vfs = vfs;
 
 interface PatientVariantData {
   ACMGClassification: string;
@@ -56,219 +46,7 @@ export class Pdf1Component implements OnInit {
     });
   }
 
-  convertHtmlToPdf() {
-    const element = document.getElementById('pdf-1') as HTMLElement;
-    if (element) {
-      html2canvas(element, { allowTaint: true, useCORS: true }).then((canvas: any) => {
-        const imgData = canvas.toDataURL("image/jpeg");
-        const pdf = new jsPDF({
-          orientation: 'portrait',
-          unit: 'px',
-          format: 'a4', // A4 page size
-        });
-  
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-  
-        // Scale the canvas to fit the page width
-        const imgWidth = canvas.width;
-        const imgHeight = canvas.height;
-        const scaleRatio = pageWidth / imgWidth;
-        const scaledHeight = imgHeight * scaleRatio;
-  
-        let yPosition = 0;
-  
-        // Loop to divide the canvas into A4-sized chunks
-        while (yPosition < imgHeight) {
-          const pageCanvas = document.createElement('canvas');
-          pageCanvas.width = canvas.width;
-          pageCanvas.height = Math.min(canvas.height - yPosition, pageHeight / scaleRatio);
-  
-          const ctx = pageCanvas.getContext('2d');
-          if (ctx) {
-            ctx.drawImage(
-              canvas,
-              0,
-              yPosition,
-              canvas.width,
-              pageCanvas.height,
-              0,
-              0,
-              pageCanvas.width,
-              pageCanvas.height
-            );
-          }
-  
-          const pageImgData = pageCanvas.toDataURL('image/jpeg');
-          pdf.addImage(
-            pageImgData,
-            'JPEG',
-            0,
-            0,
-            pageWidth,
-            pageHeight
-          );
-  
-          yPosition += pageCanvas.height;
-  
-          // Add a new page if there's more content
-          if (yPosition < imgHeight) {
-            pdf.addPage();
-          }
-        }
-  
-        // Create FormData to send the file
-        const formData = new FormData();
-  
-        setTimeout(() => {
-          // Convert the PDF to a blob
-          const blob = pdf.output('blob');
-          const file = new File([blob], 'pdf-1.pdf'); // Name the PDF file
-  
-          // Append the file to FormData
-          formData.append('file', file);
-  
-          // Log the blob and trigger file download (if needed)
-          console.log(blob);
-          saveAs(blob, 'pdf-1.pdf');
-        }, 1000);
-      }).catch(error => {
-        console.error('Error generating PDF:', error);
-      });
-    } else {
-      console.error("Element with id 'pdf-1' not found.");
-    }
-  }
-
-
-  convertHtmlToPdf2() {
-    console.log("third gen");
-    const element = document.getElementById('pdf-1') as HTMLElement; // Replace with your element ID
-    if (element) {
-      const pdf = new jsPDF({
-        unit: 'pt',
-        format: 'a4',
-        orientation: 'portrait',
-      });
-  
-      const pageWidth = pdf.internal.pageSize.width;
-      const pageHeight = pdf.internal.pageSize.height;
-      const margin = 10; // Margin in points
-      const usablePageHeight = pageHeight - 2 * margin;
-  
-      // Use html2canvas to render the element
-      html2canvas(element, {
-        scale: 2, // Increase scale for better quality
-        useCORS: true, // Allow cross-origin images
-      }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = pageWidth - 2 * margin; // Account for margins
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
-        let position = 0;
-  
-        // Add content to PDF page by page
-        while (position < imgHeight) {
-          pdf.addImage(
-            imgData,
-            'PNG',
-            margin,
-            margin - position,
-            imgWidth,
-            imgHeight
-          );
-          position += usablePageHeight;
-          if (position < imgHeight) {
-            pdf.addPage(); // Add a new page if content overflows
-          }
-        }
-  
-        // Save the PDF
-        pdf.save('pdf-1.pdf');
-      });
-    } else {
-      console.error("Element with id 'pdf-1' not found.");
-    }
-  }
-
-  convertHtmlToPdf3() {
-    console.log("third gen");
-    const element = document.getElementById('pdf-1') as HTMLElement; // Replace with your element ID
-    if (element) {
-      const pdf = new jsPDF({
-        unit: 'pt',
-        format: 'a4',
-        orientation: 'portrait',
-      });
-  
-      const pageWidth = pdf.internal.pageSize.width;
-      const pageHeight = pdf.internal.pageSize.height;
-  
-      // Calculate the scaling factor to fit the content within the page width
-      const scaleFactor = pageWidth / element.offsetWidth;
-  
-      // Use the html method of jsPDF to directly add the HTML content
-      pdf.html(element, {
-        callback: (doc) => {
-          // Save the PDF after it's generated
-          doc.save('pdf-1.pdf');
-        },
-        x: 0, // X offset
-        y: 10, // Y offset
-        width: pageWidth - 10, // Set width to fit within the page minus margins
-        html2canvas: {
-          scale: scaleFactor, 
-          letterRendering: true, 
-          useCORS: true, 
-          logging: false, 
-        },
-      });
-    } else {
-      console.error("Element with id 'pdf-1' not found.");
-    }
-  }
-
-
-convertHtmlToPdf4() {
-  console.log("third gen");
-  const element = document.getElementById('pdf-1') as HTMLElement;
-  if (element) {
-      // Extract text content from the HTML
-      const content = element.innerHTML;
-
-      // Convert HTML content to a structured format compatible with pdfMake
-      const formattedContent = this.htmlToPdfMakeContent(content);
-
-      // Define the document structure for pdfMake
-      const documentDefinition = {
-          content: formattedContent,
-          styles: {
-              heading: {
-                  fontSize: 14,
-                  bold: true,
-                  margin: [0, 0, 0, 0],
-              },
-              subheading: {
-                  fontSize: 12,
-                  italics: true,
-                  margin: [0, 0, 0, 0],
-              },
-              defaultStyle: {
-                  fontSize: 12,
-                  lineHeight: 1.5,
-                  margin: [0, 0, 0, 0],
-              },
-          },
-      };
-
-      // Generate PDF with the content and styles
-      pdfMake.createPdf(documentDefinition).download('pdf-1.pdf');
-  } else {
-      console.error("Element with id 'pdf-1' not found.");
-  }
-}
-
-convertHtmlToPdf5(): void {
+convertHtmlToPdf(): void {
   console.log("Generating PDF");
 
   const element = document.getElementById('pdf-1') as HTMLElement;
@@ -313,26 +91,21 @@ convertHtmlToPdf5(): void {
     <style>
       
      .header {
-    background-color: transparent;
-    color: white;
-    padding: 20px 0px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
+        background-color: transparent;
+        color: white;
+        padding: 0px 0px 8px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
 
   #pdf-1{
-    background: transparent;
-    max-width: 1200px;
-    width: 100%;
-    margin: auto;
     font-family: "Roboto", serif;
   }
 
   .header img{
-    width: 300px;
     object-fit: contain;
   }
 
@@ -345,18 +118,19 @@ convertHtmlToPdf5(): void {
     justify-content: flex-end;
     align-items: baseline;
     text-align: right;
+    font-size: 11px;
   }
 
   .gradient-background{
     width: 100%;
-    height: 20px;
+    height: 13px;
     background: rgb(33,170,148);
     background: linear-gradient(90deg, rgba(33,170,148,1) 0%, rgba(20,141,189,1) 100%);
   }
 
   .box-conatiner .card-custom{
     border-radius: 0px !important;
-    border:  1px solid #bbbbbb;
+    border:  1.3px solid #0E709B;
   }
 
   .header-sub p{
@@ -364,29 +138,28 @@ convertHtmlToPdf5(): void {
   }
 
   .panel-header {
-    margin: 20px 0;
-    font-size: 24px;
+    margin: 0px !important;
+    font-size: 18px;
     text-align: left;
   }
 
   .panel-header h4{
-    font-size: 25px;
-    font-weight: 500;
-    background: -webkit-linear-gradient(rgba(33,170,148,1), rgba(20,141,189,1));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 20px;
+    font-weight: 400;
+    color: #21AA94;
+    margin:22px 0px 15px !important;
   }
 
   .card-header {
-    background-color: #006eab;
+    background-color: #0E709B;
     color: #fff;
     font-weight: 700;
-    padding: 8px 12px;
-    font-size: 16px;
+    padding: 5px 8px;
+    font-size: 14px;
   }
 
   .card-body{
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .box-conatiner .card-header{
@@ -394,14 +167,15 @@ convertHtmlToPdf5(): void {
   }
 
   .alert-positive {
-    background-color: #d9534f;
+    background-color: #CE5B5B;
     color: white;
-    font-weight: 400;
-    padding: 15px 22px; 
+    font-weight: 500;
+    padding: 12px 22px; 
     text-align: left;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 25px;
-    margin-top: 30px;
+    margin-top: 22px;
+    border: 2px solid #0E709B;
   }
   .result-key {
     width:100%;
@@ -417,26 +191,30 @@ convertHtmlToPdf5(): void {
     height: 50px;
   }
 
+  .result-key-box-cont div{
+    margin-left:10px;
+  }
+
   .result-key-box-cont{
     display: flex;
     justify-content: center;
-    text-align: center;
+    text-align: left;
     align-items: center;
     gap: 12px;
-    flex-direction: column;
-    font-size: 14px;
+    font-size: 12px;
     margin: 0 12px;
   } 
+     
 
   .result-key-box-cont p{
     margin: 0px !important;
   }
 
-  .pathogenic { background-color: #d9534f; color: white; }
+  .pathogenic { background-color: #CE5B5B; color: white; }
   .vus { background-color: #f0ad4e; color: white; }
-  .negative { background-color: #5cb85c; color: white; }
+  .negative { background-color: #26B586; color: white; }
   .table-custom th {
-    background-color: #006eab;
+    background-color: #0E709B;
     color: white;
     font-size: 16px;
   }
@@ -468,11 +246,11 @@ convertHtmlToPdf5(): void {
 
   .box-conatiner .card-body p{
     margin: 0px !important;    
-    padding: 8px 18px !important;
+    padding: 5px  8px !important;
   }
 
   .box-conatiner .card-body p:not(:last-child){
-    border-bottom: 1px solid #bbbbbb;
+     border-bottom: 1.3px solid #0E709B;
   }
 
   .card-header-custom{
@@ -491,7 +269,6 @@ convertHtmlToPdf5(): void {
   /* General Table Styles */
 .table {
   width: 100%;
-  margin-bottom: 1rem;
   color: #212529;
   border-collapse: collapse;
 }
@@ -549,7 +326,7 @@ convertHtmlToPdf5(): void {
 
 /* Font and Text Styles */
 .varinat-tite{
-  font-size:16px;
+  font-size:18px;
   font-weight: lighter;
 }
 
@@ -626,18 +403,15 @@ convertHtmlToPdf5(): void {
       console.log('PDF generated successfully');
       console.log(res);
         const formData = new FormData();
-      // Ensure the response is an ArrayBuffer and process it
+  
       if (res instanceof ArrayBuffer) {
         try {
-          // Create a Blob from the ArrayBuffer with the correct MIME type for PDF
           const blob = new Blob([res], { type: 'application/pdf' });
 
-          const file = new File([blob], 'pdf-1.pdf'); // Name the PDF file
+          const file = new File([blob], 'pdf-1.pdf'); 
   
-          // Append the file to FormData
           formData.append('file', file);
   
-          // Log the blob and trigger file download (if needed)
           console.log(blob);
           saveAs(blob, 'pdf-1.pdf');
 
