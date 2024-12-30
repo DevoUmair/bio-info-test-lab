@@ -32,11 +32,11 @@
           <div class="card-custom">
             <div class="card-header">Patient</div>
             <div class="card-body">
-              <p><strong>First Name:</strong> John</p>
-              <p><strong>Last Name:</strong> Doe</p>
-              <p><strong>Date of Birth:</strong> 01/01/1965</p>
-              <p><strong>Gender:</strong> Male</p>
-              <p><strong>Accession ID:</strong> 0123456789</p>
+              <p><strong>First Name:</strong> {{patientDetail?.patientFirstName}}</p>
+              <p><strong>Last Name:</strong> {{patientDetail?.patientLastName}}</p>
+              <p><strong>Date of Birth:</strong> {{patientDetail?.patientDob}}</p>
+              <p><strong>Gender:</strong> {{patientDetail?.patientGender}}</p>
+              <p><strong>Accession ID:</strong> {{patientDetail?.AccessionId}}</p>
             </div>
           </div>
         </div>
@@ -45,9 +45,9 @@
           <div class="card-custom">
             <div class="card-header">Specimen</div>
             <div class="card-body">
-              <p><strong>Specimen Type:</strong> Buccal Swab</p>
-              <p><strong>Collection Date:</strong> </p>
-              <p><strong>Received Date:</strong> </p>
+              <p><strong>Specimen Type:</strong> {{patientDetail?.specimenType}}</p>
+              <p><strong>Collection Date:</strong> N/A </p>
+              <p><strong>Received Date:</strong> {{patientDetail?.specimenReciveDate}}</p>
               <p><strong>Panel Coverage:</strong> 94.04%</p>
               <p><strong>Average Read Depth:</strong> 138x</p>
             </div>
@@ -58,9 +58,9 @@
           <div class="card-custom">
             <div class="card-header">Ordering Physician</div>
             <div class="card-body">
-              <p><strong>Physician:</strong> </p>
+              <p><strong>Physician:</strong> {{patientDetail?.physicianName}} </p>
               <p><strong>Institution:</strong> Elixir DX</p>
-              <p><strong>Reported Date:</strong> </p>
+              <p><strong>Reported Date:</strong> {{patientDetail?.reportedDate}}</p>
               <p><strong>Ref Accession:</strong> N/A</p>
               <p><strong>Ref Accession:</strong> N/A</p>
             </div>

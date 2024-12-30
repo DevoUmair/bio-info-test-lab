@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, OnInit  } from '@angular/core';
+import {  DatePipe   } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { saveAs } from 'file-saver';
@@ -22,7 +23,18 @@ interface PatientVariantData {
   genes : string [] 
   gene_description : string
   pheno_type : string
+}
 
+interface PatientDetials {
+  patientFirstName : string,
+  patientLastName : string,
+  patientDob : string,
+  patientGender : string,
+  AccessionId : string,
+  specimenType : string,
+  specimenReciveDate : string,
+  physicianName : string,
+  reportedDate : string,
 }
 
 
@@ -34,14 +46,14 @@ interface PatientVariantData {
 export class Pdf1Component implements OnInit {
   accessionId: string | null = null;
   variantData : PatientVariantData  [] = []
-  constructor(private apiService: ApiService , private route: ActivatedRoute){
+  patientDetail : PatientDetials | null = null;
+  constructor(private apiService: ApiService , private route: ActivatedRoute , private datePipe: DatePipe){
 
   }
   ngOnInit(): void {
   
     this.route.paramMap.subscribe(params => {
       this.accessionId = params.get('id'); // 'id' is the name of the route parameter
-      // console.log(this.analysisId);
       this.loadData()
     });
   }
@@ -453,13 +465,27 @@ htmlToPdfMakeContent(html: string) {
       this.apiService.getPatientVariantsPdf1(this.accessionId).subscribe({
         next: (res : any) => {
           console.log(res);
-          this.variantData = res
+          this.variantData = res?.variants
+          this.patientDetail = {
+            patientFirstName: res?.patient.PatientName?.split(' ')[0] ?? 'N/A',
+            patientLastName: res?.patient.PatientName?.split(' ')[1] ?? 'N/A',   
+            patientDob: this.datePipe.transform(res?.patient.Dob, 'yyyy-MM-dd') ?? 'N/A',  
+            patientGender: res?.patient.Gender ?? 'N/A', 
+            AccessionId: res?.swabBarCode?.AccessionId ?? 'N/A', 
+            specimenType : res?.patientTests.SpecimenSource ?? 'N/A', 
+            specimenReciveDate: this.datePipe.transform(res?.swabBarCode?.ReceivedOn, 'yyyy-MM-dd') ?? 'N/A',  
+            physicianName: res?.provider ? res?.provider.Name : 'N/A',  
+            reportedDate: this.datePipe.transform(res?.patientTests?.CreatedOn, 'yyyy-MM-dd') ?? 'N/A', 
+          };
+                            
+          console.log(this.patientDetail);
         },
         error: (err) => {
           console.error('Error fetching data', err);
         },
         complete : () => {
           console.log(this.variantData);
+          console.log(this.patientDetail);
         }
       });
     } else {
