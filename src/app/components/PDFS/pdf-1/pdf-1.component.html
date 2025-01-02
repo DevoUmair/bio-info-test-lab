@@ -34,9 +34,9 @@
             <div class="card-body">
               <p><strong>First Name:</strong> {{patientDetail?.patientFirstName}}</p>
               <p><strong>Last Name:</strong> {{patientDetail?.patientLastName}}</p>
-              <p><strong>Date of Birth:</strong> {{patientDetail?.patientDob}}</p>
+              <p><strong>Date of Birth:</strong> {{ patientDetail?.patientDob | date:'MM-dd-yyyy' }}</p>
               <p><strong>Gender:</strong> {{patientDetail?.patientGender}}</p>
-              <p><strong>Accession ID:</strong> {{patientDetail?.AccessionId}}</p>
+              <p><strong>Ethnicity:</strong> N/A</p>
             </div>
           </div>
         </div>
@@ -45,10 +45,10 @@
           <div class="card-custom">
             <div class="card-header">Specimen</div>
             <div class="card-body">
+              <p><strong>Accession ID:</strong> {{patientDetail?.AccessionId}}</p>
               <p><strong>Specimen Type:</strong> {{patientDetail?.specimenType}}</p>
               <p><strong>Collection Date:</strong> N/A </p>
-              <p><strong>Received Date:</strong> {{patientDetail?.specimenReciveDate}}</p>
-              <p><strong>Panel Coverage:</strong> 94.04%</p>
+              <p><strong>Received Date:</strong> {{patientDetail?.specimenReciveDate | date:'MM-dd-yyyy' }}</p>
               <p><strong>Average Read Depth:</strong> 138x</p>
             </div>
           </div>
@@ -60,7 +60,7 @@
             <div class="card-body">
               <p><strong>Physician:</strong> {{patientDetail?.physicianName}} </p>
               <p><strong>Institution:</strong> Elixir DX</p>
-              <p><strong>Reported Date:</strong> {{patientDetail?.reportedDate}}</p>
+              <p><strong>Reported Date:</strong> {{ patientDetail?.reportedDate | date:'MM-dd-yyyy' }}</p>
               <p><strong>Ref Accession:</strong> N/A</p>
               <p><strong>Ref Accession:</strong> N/A</p>
             </div>
@@ -102,20 +102,20 @@
         <table class="table table-striped table-custom mt-4 mb-0"  style="border: 1px solid black; border-collapse: collapse;">
           <thead>
             <tr>
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;" >Gene & Transcript</th>
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;" >Variant</th>
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;" >Inheritance</th>
+              <th style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 14px;" class="table-para" >Gene & Transcript</th>
+              <th style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 14px;" class="table-para" >Variant</th>
+              <th style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 14px;" class="table-para" >Inheritance</th>
               <!-- <th style="border: 1px solid black;" >Disorder or Phenotype</th> -->
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;" >Criteria</th>
+              <th style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 14px;" class="table-para" >Criteria</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="border: 1px solid black; padding: 8px 15px;   background: #CE5B5B !important; color:white !important" >{{data.GeneSymbol}}</td>
-              <td style="border: 1px solid black; padding: 8px 15px;  " >{{data.Variant}}</td>
-              <td style="border: 1px solid black; padding: 8px 15px;  " >{{data.Zygosity}}</td>
+              <td style="border: 1px solid black; " class="table-para" >{{data.GeneSymbol}}</td>
+              <td style="border: 1px solid black; " class="table-para" >{{data.Variant}}</td>
+              <td style="border: 1px solid black; " class="table-para" >{{data.Zygosity}}</td>
               <!-- <td style="border: 1px solid black;" >Li-Fraumeni syndrome 2</td> -->
-              <td style="border: 1px solid black; padding: 8px 15px;  " >{{data.ACMGRules}}</td>
+              <td style="border: 1px solid black; " class="table-para" >{{data.ACMGRules}}</td>
             </tr>
           </tbody>
         </table>
@@ -123,16 +123,18 @@
         <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse;">
           <thead>
             <tr>
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">Location</th>
+              <th class="table-para" style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Location</th>
               <!-- <th style="border: 1px solid black;">Allele State</th> -->
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">Allelic Balance</th>
+              <th class="table-para" style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Allelic Balance</th>
+              <th class="table-para" style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">RsId</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="border: 1px solid black; padding: 8px 15px; ">{{data.ExonLocation}}</td>
+              <td class="table-para" style="border: 1px solid black; ">{{data.ExonLocation}}</td>
               <!-- <td style="border: 1px solid black;">Heterozygous</td> -->
-              <td style="border: 1px solid black; padding: 8px 15px; ">{{data.AllelicBalance}}</td>
+              <td class="table-para" style="border: 1px solid black; ">{{data.AllelicBalance}}</td>
+              <td class="table-para" style="border: 1px solid black; ">{{data.RSID ? data.RSID : 'NA'}}</td>
             </tr>
           </tbody>
         </table>
@@ -141,23 +143,30 @@
           <thead>
             <tr>
               <!-- <th style="border: 1px solid black;">Genomic Position</th> -->
-              <th style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;"> Coverage</th>
-              <th *ngIf="data.ACMGClassification !== 'Uncertain significance' && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">AcmgClassification</th>
-              <th *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; background: orange;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">AcmgClassification</th>
-              <th *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black; background: red;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">AcmgClassification</th>
-              <th *ngIf="data.ACMGClassification === 'Uncertain significance' " style="border: 1px solid black !important; background: yellow;  padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">AcmgClassification</th>
-              <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 15px;">Location</th>
+              <th class="table-para" style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;"> Coverage</th>
+              <th class="table-para" style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 15px;">Location</th>
+              <th class="table-para" style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">AcmgClassification</th>
+
             </tr>
           </thead>
           <tbody>
             <tr>
               <!-- <td style="border: 1px solid black;">Chr22:NC_000022.10:g.29095917C>G</td> -->
-              <td style="border: 1px solid black; font-weight: 400; padding: 8px 15px;  font-size: 14px;">{{data.Coverage}}</td>
-              <td *ngIf="data.ACMGClassification !== 'Uncertain significance' && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black; font-weight: 400; padding: 8px 15px;  font-size: 14px; font-weight: 400; font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; background: orange; font-weight: 400; padding: 8px 15px;  font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black; background: red; font-weight: 400; padding: 8px 15px;  font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td *ngIf="data.ACMGClassification === 'Uncertain significance' " style="border: 1px solid black; background: yellow; font-weight: 400; padding: 8px 15px;  font-size: 14px;">{{data.ACMGClassification}} {{data.ACMGRules}}</td>
-              <td style="border: 1px solid black; padding: 8px 15px; background: transparent; color: rgb(255, 107, 107);">Gene Info</td>
+              <td class="table-para" style="border: 1px solid black; font-weight: 400;   font-size: 14px;">{{data.Coverage}}</td>
+              <td class="table-para" style="border: 1px solid black;  background: transparent;">Gene Info</td>
+              <td class="table-para" *ngIf="!data.ACMGClassification.includes('Uncertain significance') && data.ACMGClassification !== 'Likely pathogenic' && data.ACMGClassification !== 'Pathogenic'" style="border: 1px solid black; font-weight: 400; padding: 8px 15px;  font-size: 14px; font-weight: 400; font-size: 14px;">{{data.ACMGClassification}}</td>
+              <td class="table-para" *ngIf="data.ACMGClassification === 'Likely pathogenic'" style="border: 1px solid black; font-weight: 400; font-size: 14px;">
+                <span style="background: #CE5B5B;" class="acmg-box" ></span>
+                <span>{{data.ACMGClassification}} </span>
+              </td>
+              <td class="table-para" *ngIf="data.ACMGClassification === 'Pathogenic'" style="border: 1px solid black;  font-weight: 400; font-size: 14px;">
+                <span  style="background: #CE5B5B;"  class="acmg-box" ></span>
+                <span>{{data.ACMGClassification}} </span>
+              </td>
+              <td class="table-para" *ngIf="data.ACMGClassification.includes('Uncertain significance')" style="border: 1px solid black;  font-weight: 400; font-size: 14px;">
+                <span style="background:  #f0ad4e;" class="acmg-box" ></span>
+                <span>{{data.ACMGClassification}} </span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -178,12 +187,12 @@
           <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
-                <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">Gene Info</th>
+                <th class="table-para" style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Gene Info</th>
               </tr>
             </thead>
             <tbody>
               <tr style="background: #fff;" >
-                <td style="border: 1px solid black; padding: 8px 15px;">
+                <td class="table-para" style="border: 1px solid black;">
                   The Variant is found at <span>{{data.HGVSNotation}}</span> location with a <span>{{data.VariantType}}</span> variant <span>{{data.HGVSCoding}}</span> change on the patient's <span>{{data?.GeneSymbol}}</span>.</td>
               </tr>
             </tbody>
@@ -192,12 +201,12 @@
           <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
-                <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">Variant Interpretation</th>
+                <th class="table-para" style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 14px;">Variant Interpretation</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="border: 1px solid black; padding: 8px 15px; background: transparent; line-height: 18px;">
+                <td class="table-para" style="border: 1px solid black; background: transparent;">
                     The missense variant NM_007194.4(CHEK2):c.917G>C (p.Gly306Ala) causes the same amino acid change as a
                         which is not likely to impact secondary protein structure as these residues share similar properties. 2 variants within 6
                         amino acid positions of the variant p.Gly306Ala have been shown to be pathogenic, while none have been shown to
@@ -210,19 +219,19 @@
           <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
-                <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">Inheritance</th>
+                <th class="table-para"  style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Inheritance</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="border: 1px solid black; padding: 8px 15px; background: transparent;">
+                <td class="table-para" style="border: 1px solid black; background: transparent;">
                   {{ data.Inheritance ? data.Inheritance : '-' }}
                 </td>
               </tr>
             </tbody>
           </table>
       
-          <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
+          <!-- <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
                 <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">ACMG-Classification</th>
@@ -235,29 +244,29 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
       
           <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
-                <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;">Gene & Disorder or Phenotype</th>
+                <th class="table-para"  style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Gene & Disorder or Phenotype</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="border: 1px solid black; padding: 8px 15px; background: transparent;">Li-Fraumeni syndrome 2</td>
+                <td class="table-para"  style="border: 1px solid black;  background: transparent;">Li-Fraumeni syndrome 2</td>
               </tr>
             </tbody>
           </table>
           <table *ngIf="data.gene_description" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
-                <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;  line-height: 18px;">Gene Description</th>
+                <th class="table-para"  style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Gene Description</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="border: 1px solid black; padding: 8px 15px; background: transparent;">{{data.gene_description}}</td>
+                <td class="table-para"  style="border: 1px solid black;  background: transparent;">{{data.gene_description}}</td>
               </tr>
             </tbody>
           </table>
@@ -265,12 +274,12 @@
           <table *ngIf="data.pheno_type" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
             <thead>
               <tr>
-                <th style="border: 1px solid black; padding: 7px 15px; border-top: none; font-weight: 400; font-size: 14px;  line-height: 18px;">Phenotype</th>
+                <th class="table-para"  style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 14px;">Phenotype</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="border: 1px solid black; padding: 8px 15px; background: transparent;">{{data.pheno_type}}</td>
+                <td class="table-para"  style="border: 1px solid black;  background: transparent;">{{data.pheno_type}}</td>
               </tr>
             </tbody>
           </table>
@@ -296,12 +305,12 @@
         <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
           <thead>
             <tr>
-              <th style="border: 1px solid black; padding: 10px 15px; border-top: none; font-weight: 400; font-size: 15px;">Regulatory Disclosures</th>
+              <th class="table-para"  style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 15px;">Regulatory Disclosures</th>
             </tr>
           </thead>
           <tbody>
             <tr style="background: #fff;" >
-              <td style="border: 1px solid black; padding: 8px 15px;  line-height: 18px;">
+              <td class="table-para"  style="border: 1px solid black; ">
                 Cancer risk factor screening is intended as a tool to guide physicians in the management of their patients and should not be treated as a diagnostic tool. NGS-based risk factor screening is considered a high-complexity laboratory-developed test (LDT) by Centers for Medicare & Medicaid Services (CMS) under the Clinical Laboratory Improvement Amendment (CLIA) and is not FDA-cleared. The test and performance metrics were validated in house by Elixir Diagnostics technical personnel (or designated scientific advisors) and approved by their Laboratory Director. The results are intended for use only by the ordering physician and/or designated healthcare provider. The ordering provider is responsible for 1) ascertaining the medical necessity of the ordered test, 2) resulting diagnoses, 3) management of the disease and/or decisions based on the data provided. Results rely on collection personnel following specified collection and shipment protocols. 
               </td>
             </tr>
@@ -310,12 +319,12 @@
         <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
           <thead>
             <tr>
-              <th style="border: 1px solid black; padding: 10px 15px; border-top: none; font-weight: 400; font-size: 15px;">Test Limitations</th>
+              <th class="table-para"  style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 15px;">Test Limitations</th>
             </tr>
           </thead>
           <tbody>
             <tr style="background: #fff;" >
-              <td style="border: 1px solid black; padding: 8px 15px;  line-height: 18px;">
+              <td class="table-para"  style="border: 1px solid black; ">
                 The results of this screen are meant strictly to guide a physician in the management of their patient's health. Large genomic rearrangements, low frequency mutations, structural and somatic mutations are not reported. Presence of a pathogenic/likely pathogenic variant does not guarantee that an individual will develop cancer, nor is the absence of such variants a guarantee that an individual will not develop cancer. Any likely pathogenic or pathogenic variants detected in the report should be clinically correlated per physician’s advice and confirmed via the orthogonal testing platforms (Sanger Sequencing or PCR based tests).  
               </td>
             </tr>
@@ -325,12 +334,12 @@
         <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
           <thead>
             <tr>
-              <th style="border: 1px solid black; padding: 10px 15px; border-top: none; font-weight: 400; font-size: 15px;">References</th>
+              <th class="table-para"  style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 15px;">References</th>
             </tr>
           </thead>
           <tbody>
             <tr style="background: #fff;" >
-              <td style="border: 1px solid black; padding: 8px 15px;  line-height: 18px;">
+              <td class="table-para"  style="border: 1px solid black; ">
                   Richards, Sue, et al. "Standards and guidelines for the interpretation of sequence variants: a joint consensus
                       recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular
                       Pathology." Genetics in medicine 17.5 (2015): 405.Exome Aggregation Consortium et al. "Analysis of Protein-Coding
@@ -347,12 +356,12 @@
         <table class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
           <thead>
             <tr>
-              <th style="border: 1px solid black; padding: 10px 15px; border-top: none; font-weight: 400; font-size: 15px;">Test Methodology</th>
+              <th class="table-para"  style="border: 1px solid black;  border-top: none; font-weight: 400; font-size: 15px;">Test Methodology</th>
             </tr>
           </thead>
           <tbody>
             <tr style="background: #fff;" >
-              <td style="border: 1px solid black; padding: 8px 15px;  line-height: 18px;">
+              <td class="table-para"  style="border: 1px solid black; ">
                   Cancer Risk Factor Screening performed at Elixir Diagnostics utilizes next generation sequencing technology using IIIumina MiniSeq and NextSeq platforms. Genomic DNA is extracted from buccal swabs (Wet). The extracted DNA is tagemented and enriched for regions of interest using specific probes for each region outlined in the BED (Browser Extensible Data) file. Positive and negative controls are included in each run to validate amplicon preparation and targeted sequencing of coding regions, intronic/exonic boundaries, and variant detection. Sequences obtained are then aligned against a human reference genome and variants such as SNVs (Single Nucleotide Variants) and Indels (Insertions and Deletions) are noted. Computational analysis and variant calling are performed by Varsome (https://varsome.com/). Briefly, reads from the sequence output are aligned to the human reference genome (GRCh37) using the Burrows-Wheeler Aligner (BWA). Germline variants to reference are called using Sentieon's DNA Scope variant caller. The variants are annotated and filtered using the Elixir Diagnostics analysis work flow implementing the ACMG guidelines for interpretation of sequence variants. This includes comparison against the gnomAD population catalog of variants in 125,748 exomes, the 1000 Genomes Project Consortium, the NCBI ClinVar database of clinical assertions on variant’s pathogenicity and multiple lines of computational evidence on conservation and functional impact. The following databases and in-silico algorithms are used to annotate and evaluate the impact of the variant in the context of human disease: 1000 genomes, gnomAD, ClinVar, OMIM, dbSNP, VS PolyPhen2, PhyloP, GERP, and GHR Genes. Analysis is reported using the HGVS nomenclature (www.hgvs.org) as implemented by custom transcript annotation algorithm. Variants with an end ACMG classification of Pathogenic/Likely Pathogenic are reported as positive, while Benign/Likely Benign variants are reported as negative. Classification of pathogenicity is consistently updated by the National Institutes of Health and the information found within this report is consistent with the current knowledge base. All reports are reviewed prior to release by either Elixir Diagnostics Technical Supervisor or the General Supervisor. 
               </td>
             </tr>
@@ -362,12 +371,12 @@
         <table *ngIf="variantData.length > 0" class="table table-striped table-custom mb-0" style="border: 1px solid black; border-collapse: collapse; border-top: none;">
           <thead>
             <tr>
-              <th style="border: 1px solid black; padding: 10px 15px; border-top: none; font-weight: 400; font-size: 15px;">Genes Evaluated</th>
+              <th class="table-para"  style="border: 1px solid black; border-top: none; font-weight: 400; font-size: 15px;">Genes Evaluated</th>
             </tr>
           </thead>
           <tbody>
             <tr style="background: #fff;" >
-              <td style="border: 1px solid black; padding: 8px 15px;  line-height: 18px;">
+              <td class="table-para"  style="border: 1px solid black; ">
                   {{variantData[0].genes}}
               </td>
             </tr>

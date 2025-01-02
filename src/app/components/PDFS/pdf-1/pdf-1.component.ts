@@ -23,9 +23,11 @@ interface PatientVariantData {
   genes : string [] 
   gene_description : string
   pheno_type : string
+  RSID : string;
 }
 
 interface PatientDetials {
+  patientRace : string,
   patientFirstName : string,
   patientLastName : string,
   patientDob : string,
@@ -97,9 +99,10 @@ convertHtmlToPdf(): void {
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <style>
       
      .header {
@@ -114,7 +117,7 @@ convertHtmlToPdf(): void {
       }
 
   #pdf-1{
-    font-family: "Roboto", serif;
+    font-family: "Poppins", serif;
   }
 
   .header img{
@@ -200,7 +203,7 @@ convertHtmlToPdf(): void {
   }
   .result-key .result-key-box {
     width: 50px;
-    height: 50px;
+    height: 40px;
   }
 
   .result-key-box-cont div{
@@ -217,6 +220,12 @@ convertHtmlToPdf(): void {
     margin: 0 12px;
   } 
      
+  .acmg-box{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
 
   .result-key-box-cont p{
     margin: 0px !important;
@@ -343,7 +352,7 @@ convertHtmlToPdf(): void {
 }
 
 .mt-4 {
-  margin-top: 1.5rem;
+  margin-top: 0.9rem;
 }
 
 .mb-0 {
@@ -374,6 +383,11 @@ convertHtmlToPdf(): void {
   font-size: 14px;
 }
 
+.table-para{
+    padding: 7px 9px; 
+    line-height: 16px;
+}
+
 /* Responsive Styles for Tables */
 @media (max-width: 768px) {
   .table-custom th,
@@ -395,7 +409,6 @@ convertHtmlToPdf(): void {
         flex-direction: column;
     }
 }
- 
     </style>
   </head>
   <body>
@@ -467,6 +480,7 @@ htmlToPdfMakeContent(html: string) {
           console.log(res);
           this.variantData = res?.variants
           this.patientDetail = {
+            patientRace : res?.patient?.Race ?? 'N/A',
             patientFirstName: res?.patient.PatientName?.split(' ')[0] ?? 'N/A',
             patientLastName: res?.patient.PatientName?.split(' ')[1] ?? 'N/A',   
             patientDob: this.datePipe.transform(res?.patient.Dob, 'yyyy-MM-dd') ?? 'N/A',  
