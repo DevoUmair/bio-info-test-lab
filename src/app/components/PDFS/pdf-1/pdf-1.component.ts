@@ -49,11 +49,13 @@ export class Pdf1Component implements OnInit {
   accessionId: string | null = null;
   variantData : PatientVariantData  [] = []
   patientDetail : PatientDetials | null = null;
+  loader : boolean = false
+  loadedFullly : boolean = false
   constructor(private apiService: ApiService , private route: ActivatedRoute , private datePipe: DatePipe){
 
   }
+
   ngOnInit(): void {
-  
     this.route.paramMap.subscribe(params => {
       this.accessionId = params.get('id'); // 'id' is the name of the route parameter
       this.loadData()
@@ -61,6 +63,7 @@ export class Pdf1Component implements OnInit {
   }
 
 convertHtmlToPdf(): void {
+  this.loader = true
   console.log("Generating PDF");
 
   const element = document.getElementById('pdf-1') as HTMLElement;
@@ -447,7 +450,11 @@ convertHtmlToPdf(): void {
         console.error('Expected ArrayBuffer, but got:', typeof res);
       }
     },
+    complete : () => {
+      this.loader = false
+    },
     error: (err) => {
+      this.loader = false
       console.error('Error generating PDF', err);
     },
   });
@@ -474,6 +481,7 @@ htmlToPdfMakeContent(html: string) {
 
 
   loadData(){
+    this.loader = true
     if (this.accessionId) { // Ensure analysisId is not null or undefined
       this.apiService.getPatientVariantsPdf1(this.accessionId).subscribe({
         next: (res : any) => {
@@ -496,10 +504,14 @@ htmlToPdfMakeContent(html: string) {
         },
         error: (err) => {
           console.error('Error fetching data', err);
+          this.loader = false
+          this.loadedFullly = true
         },
         complete : () => {
           console.log(this.variantData);
           console.log(this.patientDetail);
+          this.loader = false
+          this.loadedFullly = true
         }
       });
     } else {

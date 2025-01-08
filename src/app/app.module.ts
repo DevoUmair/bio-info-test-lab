@@ -23,6 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatIconModule} from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatFormFieldModule,
     MatDialogModule,
     NgbModule,
+    MatIconModule
   ],
   providers: [
     DatePipe

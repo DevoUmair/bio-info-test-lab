@@ -1,5 +1,14 @@
 <div class="py-4" >
-    <div  id="pdf-1">
+    <div class="loader" *ngIf="loader" >   
+      <mat-spinner ></mat-spinner>
+    </div>
+    <div class="custom-container">
+        <button *ngIf="loadedFullly" type="button" class="btn btn-info"  (click)="convertHtmlToPdf()" > 
+          <mat-icon>cloud_download</mat-icon>
+          <span>Download</span>  
+        </button>
+    </div>
+    <div id="pdf-1">
         <div class="header">
             <img style="width: 200px;" src="http://localhost:4200/assets/LOGo.png" />
             <div class="header-sub" >
@@ -387,9 +396,6 @@
       <div class="footer">
         <p>CLIA: 45D2257672 &nbsp; | &nbsp; Lab Director: Dr. Kerollos Shaker</p>
       </div>
-    </div>
-    <div class="container">
-      <button type="button" class="btn btn-info"  (click)="convertHtmlToPdf()" >EXPORT</button>
     </div>
   </div>
   
