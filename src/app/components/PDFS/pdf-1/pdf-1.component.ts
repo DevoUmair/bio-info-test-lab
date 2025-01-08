@@ -427,37 +427,36 @@ convertHtmlToPdf(): void {
   }
 
   this.apiService.generatePdf(htmlContent).subscribe({
-    next: (res: any) => {
+    next: (res: ArrayBuffer) => {
       console.log('PDF generated successfully');
+      const formData = new FormData();
       console.log(res);
-        const formData = new FormData();
   
-      if (res instanceof ArrayBuffer) {
-        try {
-          const blob = new Blob([res], { type: 'application/pdf' });
-
-          const file = new File([blob], 'pdf-1.pdf'); 
+      try {
+        // Convert ArrayBuffer to Blob
+        const blob = new Blob([res], { type: 'application/pdf' });
   
-          formData.append('file', file);
+        // Optional: Save locally
+        saveAs(blob, 'pdf-1.pdf');
   
-          console.log(blob);
-          saveAs(blob, 'pdf-1.pdf');
-
-        } catch (error) {
-          console.error('Error handling the ArrayBuffer response:', error);
-        }
-      } else {
-        console.error('Expected ArrayBuffer, but got:', typeof res);
+        // Append Blob to FormData
+        const file = new File([blob], 'pdf-1.pdf');
+        formData.append('file', file);
+  
+        console.log('Blob and FormData prepared successfully:', blob);
+      } catch (error) {
+        console.error('Error handling the ArrayBuffer response:', error);
       }
     },
-    complete : () => {
-      this.loader = false
+    complete: () => {
+      this.loader = false;
     },
     error: (err) => {
-      this.loader = false
-      console.error('Error generating PDF', err);
+      this.loader = false;
+      console.error('Error generating PDF:', err);
     },
   });
+  
 }
 
 

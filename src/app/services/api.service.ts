@@ -32,11 +32,11 @@ export class ApiService {
   }
  
   generatePdf(htmlContent: string) {
-    return this.http.post(
-      `${this.varinatUrl}generate_result_pdf`,
-      { htmlContent }, // Correct JSON structure
+    return this.http.post(`${this.varinatUrl}generate_result_pdf`, 
+      { htmlContent }, 
+      { responseType: 'arraybuffer' } // Expect binary data
     );
-  }
+  }  
   
   
   
