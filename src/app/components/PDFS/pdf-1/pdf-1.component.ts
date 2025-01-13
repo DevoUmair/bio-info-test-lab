@@ -51,6 +51,7 @@ export class Pdf1Component implements OnInit {
   patientDetail : PatientDetials | null = null;
   loader : boolean = false
   loadedFullly : boolean = false
+  formName: any = "";
   constructor(private apiService: ApiService , private route: ActivatedRoute , private datePipe: DatePipe){
 
   }
@@ -498,7 +499,7 @@ htmlToPdfMakeContent(html: string) {
             physicianName: res?.provider ? res?.provider.Name : 'N/A',  
             reportedDate: this.datePipe.transform(res?.patientTests?.CreatedOn, 'yyyy-MM-dd') ?? 'N/A', 
           };
-                            
+          this.formName = res?.formName                  
           console.log(this.patientDetail);
         },
         error: (err) => {
